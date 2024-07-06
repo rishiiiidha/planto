@@ -2,7 +2,10 @@ import {defer} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData, NavLink} from '@remix-run/react';
 import {useAnalytics} from '@shopify/hydrogen';
-import {useAside} from '~/components/Aside';
+import { useAside } from '~/components/Aside';
+import { FaSearch } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
+import {IoPersonCircle} from 'react-icons/io5';
 
 /**
  * @param {HeaderProps}
@@ -31,12 +34,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
     </header>
   );
 }
-// /**
-//  * @param {{
-//  *   collection: LogoUrlQuery;
-//  * }}
-//  */
-// async function LogoUrlQuery({})
+
 
 /**
  * @param {{
@@ -103,12 +101,21 @@ export function HeaderMenu({
  */
 function HeaderCtas({isLoggedIn, cart}) {
   return (
-    <nav className="w-full flex justify-center items-center gap-5" role="navigation">
+    <nav
+      className="w-1/6 flex justify-center items-center gap-5"
+      role="navigation"
+    >
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" >
+      <NavLink prefetch="intent" to="/account">
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
+            {(isLoggedIn) =>
+              isLoggedIn ? (
+                'Account'
+              ) : (
+                <IoPersonCircle style={{width: '30px', height: '30px'}} />
+              )
+            }
           </Await>
         </Suspense>
       </NavLink>
@@ -134,7 +141,7 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button className="reset" onClick={() => open('search')}>
-      Search
+      <FaSearch style={{width: '20px', height: '20px'}} />
     </button>
   );
 }
@@ -160,7 +167,13 @@ function CartBadge({count}) {
         });
       }}
     >
-      Cart {count}
+      <div className="flex">
+        <FaShoppingCart
+          className="relative"
+          style={{width: '20px', height: '20px'}}
+        />
+        <div>{count != 0 && count}</div>
+      </div>
     </a>
   );
 }

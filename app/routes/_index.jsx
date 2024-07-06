@@ -7,7 +7,7 @@ import {Image, Money} from '@shopify/hydrogen';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Planto'}];
 };
 
 /**
@@ -63,9 +63,22 @@ export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
   return (
-    <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+    <div
+      className="home"
+      style={{
+        backgroundImage: `url('/background-image.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        height: 'auto',
+        minHeight: '100vh',
+        opacity: 0.6,
+      }}
+    >
+      <div style={{height: '3500px'}}>
+        <FeaturedCollection collection={data.featuredCollection} />
+        <RecommendedProducts products={data.recommendedProducts} />
+      </div>
     </div>
   );
 }

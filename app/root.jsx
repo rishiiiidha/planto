@@ -155,7 +155,7 @@ function Layout({children}) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-[#1F271C] text-white">
+      <body className="bg-[#192116] text-white">
         {data ? (
           <Analytics.Provider
             cart={data.cart}
