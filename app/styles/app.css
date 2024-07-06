@@ -4,12 +4,12 @@
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
   --header-height: 64px;
-  --color-dark: #000;
-  --color-light: #fff;
+  --color-dark: #fff;
+  --color-light: #000;
 }
 
-img {
-  border-radius: 4px;
+body{
+  background-image: url()
 }
 
 /*

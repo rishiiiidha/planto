@@ -1,5 +1,6 @@
+import {defer} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
+import {Await, useLoaderData, NavLink} from '@remix-run/react';
 import {useAnalytics} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 
@@ -9,9 +10,16 @@ import {useAside} from '~/components/Aside';
 export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
-    <header className="header">
+    <header className="flex p-8">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+        <div className="flex justify-center items-center">
+          <img
+            className="size-10 mr-2"
+            src={shop.brand.logo.image.url}
+            alt=""
+          />
+          <div className="text-slate-100 text-xl font-bold">{shop.name}</div>
+        </div>
       </NavLink>
       <HeaderMenu
         menu={menu}
@@ -23,6 +31,12 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
     </header>
   );
 }
+// /**
+//  * @param {{
+//  *   collection: LogoUrlQuery;
+//  * }}
+//  */
+// async function LogoUrlQuery({})
 
 /**
  * @param {{
@@ -48,15 +62,12 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
+    <nav
+      className=" flex justify-center items-center gap-10 w-full text-white"
+      role="navigation"
+    >
       {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
+        <NavLink end onClick={closeAside} prefetch="intent" to="/">
           Home
         </NavLink>
       )}
@@ -77,7 +88,6 @@ export function HeaderMenu({
             key={item.id}
             onClick={closeAside}
             prefetch="intent"
-            style={activeLinkStyle}
             to={url}
           >
             {item.title}
@@ -93,9 +103,9 @@ export function HeaderMenu({
  */
 function HeaderCtas({isLoggedIn, cart}) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="w-full flex justify-center items-center gap-5" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+      <NavLink prefetch="intent" to="/account" >
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
@@ -235,6 +245,7 @@ function activeLinkStyle({isActive, isPending}) {
  * @property {string} publicStoreDomain
  */
 
+/** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
 /** @typedef {import('@shopify/hydrogen').CartViewPayload} CartViewPayload */
 /** @typedef {import('storefrontapi.generated').HeaderQuery} HeaderQuery */
 /** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */

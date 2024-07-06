@@ -13,8 +13,10 @@ import {
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
+import indexStyles from '~/styles/index.css?url';
 import {PageLayout} from '~/components/PageLayout';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
+
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -38,6 +40,7 @@ export function links() {
   return [
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: indexStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -152,7 +155,7 @@ function Layout({children}) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-[#1F271C] text-white">
         {data ? (
           <Analytics.Provider
             cart={data.cart}
